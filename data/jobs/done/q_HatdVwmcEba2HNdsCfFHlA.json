@@ -1,0 +1,11 @@
+{
+  "jobId": "job_f2597c48-07cc-4f40-9058-b7557d650359",
+  "queryCode": "q_HatdVwmcEba2HNdsCfFHlA",
+  "createdAt": "2026-04-26T11:59:46.796Z",
+  "status": "done",
+  "model": "gpt-5.4",
+  "baseUrl": "https://api.aportal.ai/v1",
+  "shareResult": true,
+  "resultId": "res_bdc5f3c0-4ef8-49c0-a614-30014c97cd69",
+  "visibility": "public"
+}

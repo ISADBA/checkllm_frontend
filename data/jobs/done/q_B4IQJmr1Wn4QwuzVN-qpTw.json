@@ -1,0 +1,11 @@
+{
+  "jobId": "job_ad5be2f1-6c45-4425-ae6d-06194d9a3750",
+  "queryCode": "q_B4IQJmr1Wn4QwuzVN-qpTw",
+  "createdAt": "2026-04-26T12:23:35.080Z",
+  "status": "done",
+  "model": "gpt-5.4",
+  "baseUrl": "https://openrouter.ai/api/v1",
+  "shareResult": true,
+  "resultId": "res_41737e66-690b-4ee6-8772-c4bbed90043a",
+  "visibility": "public"
+}

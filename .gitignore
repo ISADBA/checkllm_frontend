@@ -1,0 +1,14 @@
+.next
+node_modules
+data/jobs/*
+data/tmp/*
+data/results/public/*
+data/results/private/*
+!data/jobs/queued/
+!data/jobs/running/
+!data/jobs/done/
+!data/jobs/failed/
+!data/tmp/
+!data/results/public/
+!data/results/private/
+tsconfig.tsbuildinfo
