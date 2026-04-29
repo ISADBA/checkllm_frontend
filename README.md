@@ -73,7 +73,7 @@ make build
 默认会构建：
 
 ```text
-checkllm-frontend:latest
+crpi-0vih3w2g8se3zbl8.cn-hangzhou.personal.cr.aliyuncs.com/isadba/checkllm-frontend:latest
 ```
 
 说明：
@@ -85,7 +85,7 @@ checkllm-frontend:latest
 可选变量：
 
 ```bash
-make build IMAGE=checkllm-frontend TAG=v0.1.0
+make build TAG=v0.1.0
 ```
 
 ## 容器运行
@@ -128,7 +128,7 @@ docker run \
   -p 3000:3000 \
   -e CHECKLLM_DATA_ROOT=/data/checkllm \
   -v /mnt/checkllm-s3:/data/checkllm \
-  checkllm-frontend:latest
+  crpi-0vih3w2g8se3zbl8.cn-hangzhou.personal.cr.aliyuncs.com/isadba/checkllm-frontend:latest
 ```
 
 ### 方式二：容器内直接用 s3fs 挂载
@@ -146,7 +146,7 @@ docker run \
   -e S3_REGION=ap-southeast-1 \
   -e AWS_ACCESS_KEY_ID=xxx \
   -e AWS_SECRET_ACCESS_KEY=yyy \
-  checkllm-frontend:latest
+  crpi-0vih3w2g8se3zbl8.cn-hangzhou.personal.cr.aliyuncs.com/isadba/checkllm-frontend:latest
 ```
 
 说明：
