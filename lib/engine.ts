@@ -88,9 +88,11 @@ export async function runEngineForJob(job: JobRecord): Promise<EngineExecutionOu
 
 async function resolveEngineBinary() {
   const candidates = [
+    process.env.CHECKLLM_ENGINE_BIN,
+    path.resolve(process.cwd(), "bin", binaryName("checkllm")),
     path.resolve(process.cwd(), "..", "checkllm_engine", "checkllm"),
     path.resolve(process.cwd(), "..", "checkllm_engine", "dist", currentPlatform(), binaryName("checkllm"))
-  ];
+  ].filter(Boolean) as string[];
 
   for (const candidate of candidates) {
     try {
@@ -105,12 +107,10 @@ async function resolveEngineBinary() {
 }
 
 function resolveBaselinePath(model: string) {
+  const configuredBaselinesDir = process.env.CHECKLLM_BASELINES_DIR;
+
   return path.resolve(
-    process.cwd(),
-    "..",
-    "checkllm_engine",
-    "docs",
-    "baselines",
+    configuredBaselinesDir ?? path.resolve(process.cwd(), "engine-docs", "baselines"),
     `${inferProvider(model)}-${model}.md`
   );
 }

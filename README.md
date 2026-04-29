@@ -62,6 +62,99 @@ pnpm worker
 - `pnpm dev` 只启动前端页面
 - `pnpm worker` 才会消费 `data/jobs/queued/` 里的任务
 
+## Docker 打包
+
+在 `checkllm_frontend/` 目录下执行：
+
+```bash
+make build
+```
+
+默认会构建：
+
+```text
+checkllm-frontend:latest
+```
+
+说明：
+
+- 打包过程会同时构建 `checkllm_frontend`
+- 镜像内会包含 `checkllm_engine` 二进制
+- Docker build context 使用仓库根目录，因此可以同时读取 `checkllm_engine/`
+
+可选变量：
+
+```bash
+make build IMAGE=checkllm-frontend TAG=v0.1.0
+```
+
+## 容器运行
+
+镜像启动后会：
+
+1. 启动 Next.js Web 服务
+2. 后台启动 worker
+3. 由 worker 调用镜像内置的 `checkllm_engine`
+
+默认数据目录：
+
+```text
+/data/checkllm
+```
+
+可通过环境变量覆盖：
+
+```text
+CHECKLLM_DATA_ROOT
+CHECKLLM_ENGINE_BIN
+CHECKLLM_BASELINES_DIR
+PORT
+```
+
+## S3 挂载存储
+
+任务状态、检测结果、临时目录都基于 `CHECKLLM_DATA_ROOT` 存储。
+
+推荐两种方式：
+
+### 方式一：宿主机先挂载 S3，再 bind mount 给容器
+
+这是更稳妥的方式。容器只把挂载后的本地目录当普通文件系统使用。
+
+例如：
+
+```bash
+docker run \
+  -p 3000:3000 \
+  -e CHECKLLM_DATA_ROOT=/data/checkllm \
+  -v /mnt/checkllm-s3:/data/checkllm \
+  checkllm-frontend:latest
+```
+
+### 方式二：容器内直接用 s3fs 挂载
+
+镜像内已包含 `s3fs` 和挂载脚本。启用方式：
+
+```bash
+docker run \
+  -p 3000:3000 \
+  --cap-add SYS_ADMIN \
+  --device /dev/fuse \
+  --security-opt apparmor:unconfined \
+  -e S3_MOUNT_ENABLED=true \
+  -e S3_BUCKET=your-bucket \
+  -e S3_REGION=ap-southeast-1 \
+  -e AWS_ACCESS_KEY_ID=xxx \
+  -e AWS_SECRET_ACCESS_KEY=yyy \
+  checkllm-frontend:latest
+```
+
+说明：
+
+- 容器内挂载 S3 依赖 FUSE
+- 需要容器运行时具备对应权限
+- 如果你使用的是兼容 S3 的对象存储，还可以补 `S3_ENDPOINT`
+
 ## engine 对接
 
 当前 worker 会优先查找以下二进制：

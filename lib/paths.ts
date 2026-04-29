@@ -1,8 +1,9 @@
 import path from "node:path";
 
 const root = process.cwd();
+const configuredDataRoot = process.env.CHECKLLM_DATA_ROOT;
 
-export const dataRoot = path.join(root, "data");
+export const dataRoot = configuredDataRoot ? path.resolve(configuredDataRoot) : path.join(root, "data");
 export const jobsRoot = path.join(dataRoot, "jobs");
 export const queuedJobsDir = path.join(jobsRoot, "queued");
 export const runningJobsDir = path.join(jobsRoot, "running");
