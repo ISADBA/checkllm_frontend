@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 
 import { listPublicResults } from "@/lib/results";
 
+export const dynamic = "force-dynamic";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const results = await listPublicResults();
   const baseUrl = "https://checkllm.local";

@@ -5,6 +5,8 @@ import { SiteHeader } from "@/components/home/site-header";
 import { CopyQueryButton } from "@/components/ui/copy-query-button";
 import { getJobByQueryCode } from "@/lib/jobs";
 
+export const dynamic = "force-dynamic";
+
 type Props = {
   params: Promise<{ queryCode: string }>;
 };

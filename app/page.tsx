@@ -4,6 +4,8 @@ import { SiteHeader } from "@/components/home/site-header";
 import { SubmissionForm } from "@/components/form/submission-form";
 import { listPublicResults } from "@/lib/results";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const results = await listPublicResults();
 

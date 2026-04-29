@@ -6,6 +6,8 @@ import { SiteHeader } from "@/components/home/site-header";
 import { buildResultMetadata } from "@/lib/metadata";
 import { getPublicResultById } from "@/lib/results";
 
+export const dynamic = "force-dynamic";
+
 type Props = {
   params: Promise<{ resultId: string }>;
 };

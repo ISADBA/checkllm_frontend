@@ -5,6 +5,8 @@ import { SiteHeader } from "@/components/home/site-header";
 import { getJobStateByQueryCode } from "@/lib/jobs";
 import { getPrivateResultById, getResultByQueryCode } from "@/lib/results";
 
+export const dynamic = "force-dynamic";
+
 type Props = {
   params: Promise<{ queryCode: string }>;
 };
