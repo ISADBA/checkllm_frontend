@@ -9,6 +9,7 @@ WORKDIR /app/checkllm_frontend
 RUN pnpm install --frozen-lockfile
 
 COPY checkllm_frontend ./ 
+RUN mkdir -p public
 RUN pnpm build
 
 FROM golang:1.22-bookworm AS engine-builder
