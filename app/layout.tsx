@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
+import { getSiteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://checkllm.local"),
+  metadataBase: new URL(getSiteUrl()),
   title: {
     default: "checkllm | LLM 模型真实性与保真度检测",
     template: "%s | checkllm"
