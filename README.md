@@ -2,6 +2,12 @@
 
 `checkllm_frontend` 是 `checkllm` 的 Web 前端，用于提交模型检测任务、查询异步结果、浏览共享检测案例，并展示 `checkllm_engine` 生成的原始 Markdown 报告。
 
+## 相关仓库
+
+- 当前 `checkllm_frontend/` 对应的前端仓库是：`https://github.com/ISADBA/checkllm_frontend`
+- 配套的 engine 仓库是：`https://github.com/ISADBA/checkllm`
+- `checkllm_engine` 负责实际的模型检测执行、报告生成和 baseline 管理，前端通过 worker 调用它完成任务处理
+
 ## 功能
 
 - 首页提交模型检测任务
@@ -108,8 +114,13 @@ make build TAG=v0.1.0
 CHECKLLM_DATA_ROOT
 CHECKLLM_ENGINE_BIN
 CHECKLLM_BASELINES_DIR
+CHECKLLM_WORKER_CONCURRENCY
 PORT
 ```
+
+说明：
+
+- `CHECKLLM_WORKER_CONCURRENCY` 控制容器内并发消费任务数，默认值为 `4`
 
 ## S3 挂载存储
 

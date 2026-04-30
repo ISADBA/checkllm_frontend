@@ -7,6 +7,7 @@ DATA_ROOT="${CHECKLLM_DATA_ROOT:-/data/checkllm}"
 export CHECKLLM_DATA_ROOT="${DATA_ROOT}"
 export CHECKLLM_ENGINE_BIN="${CHECKLLM_ENGINE_BIN:-/app/bin/checkllm}"
 export CHECKLLM_BASELINES_DIR="${CHECKLLM_BASELINES_DIR:-/app/engine-docs/baselines}"
+export CHECKLLM_WORKER_CONCURRENCY="${CHECKLLM_WORKER_CONCURRENCY:-4}"
 export PORT="${PORT:-3000}"
 
 if [ "${S3_MOUNT_ENABLED:-false}" = "true" ]; then

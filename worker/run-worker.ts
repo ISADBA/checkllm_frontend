@@ -6,7 +6,13 @@ import { doneJobsDir, failedJobsDir, queuedJobsDir, runningJobsDir } from "@/lib
 import { sleep } from "@/lib/time";
 import { executeJob } from "@/worker/execute-job";
 
+const workerConcurrency = parseWorkerConcurrency(process.env.CHECKLLM_WORKER_CONCURRENCY);
+
 async function main() {
+  await Promise.all(Array.from({ length: workerConcurrency }, (_, index) => runLoop(index + 1)));
+}
+
+async function runLoop(_workerId: number) {
   for (;;) {
     await processNextJob();
     await sleep(1500);
@@ -26,6 +32,15 @@ async function processNextJob() {
 
   try {
     await fs.rename(queuedPath, runningPath);
+  } catch (error) {
+    if (isExpectedClaimRace(error)) {
+      return;
+    }
+
+    throw error;
+  }
+
+  try {
     const content = await fs.readFile(runningPath, "utf8");
     const job = JSON.parse(content) as JobRecord;
 
@@ -91,4 +106,22 @@ function sanitizeFailureMessage(error: unknown, apiKey?: string) {
   }
 
   return message.split(apiKey).join("[REDACTED_API_KEY]");
+}
+
+function parseWorkerConcurrency(value: string | undefined) {
+  const parsed = Number(value);
+
+  if (Number.isInteger(parsed) && parsed > 0) {
+    return parsed;
+  }
+
+  return 4;
+}
+
+function isExpectedClaimRace(error: unknown) {
+  if (!error || typeof error !== "object" || !("code" in error)) {
+    return false;
+  }
+
+  return error.code === "ENOENT";
 }
