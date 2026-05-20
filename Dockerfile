@@ -2,7 +2,7 @@ FROM node:22-bookworm-slim AS frontend-builder
 
 WORKDIR /app
 
-RUN corepack enable
+RUN corepack enable && corepack prepare pnpm@10.16.1 --activate
 
 COPY checkllm_frontend/package.json checkllm_frontend/pnpm-lock.yaml ./checkllm_frontend/
 WORKDIR /app/checkllm_frontend
